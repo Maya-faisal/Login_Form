@@ -1,0 +1,17 @@
+﻿
+@using Login_Page.Models;
+@using Microsoft.AspNetCore.Http;
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome @TempData["username"]</h1>
+        <h1>@TempData["theres"]</h1>
+</div>

@@ -1,0 +1,85 @@
+﻿@model Login_Page.Models.Users
+
+<!DOCTYPE html>
+<html lang="en">
+<link rel="stylesheet" href="~/css/login.css" >
+<head>
+    <meta charset="UTF-8">
+ </head>
+    <body id="view">
+        <title>LogIn Page</title>
+        <div class="container loginbody">
+            <div class="screen">
+                <div class="screen__content">
+                    <form class="login">
+                        <div class="login__field">
+                            <div>
+                                <h2>User LogIn</h2><br /><br>
+                            </div>
+                            <i class="login__icon fas fa-user"></i>
+                            <input type="text" class="login__input" placeholder="User name / Email" id="user">
+                        </div>
+                        <div class="login__field">
+                            <i class="login__icon fas fa-lock"></i>
+                            <input type="password" class="login__input" placeholder="Password" id="password">
+                        </div>
+                        <button type="button" class="button login__submit" id="butN">
+                            <span class="button__text">Log In Now</span>
+                            <i class="button__icon fas fa-chevron-right"></i>
+                        </button>
+                        <h3 class="errorMessage">@TempData["message"] </h3>
+                    </form>
+                </div>
+                <div class="screen__background">
+                    <span class="screen__background__shape screen__background__shape4"></span>
+                    <span class="screen__background__shape screen__background__shape3"></span>
+                    <span class="screen__background__shape screen__background__shape2"></span>
+                    <span class="screen__background__shape screen__background__shape1"></span>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
+
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+    $(document).ready(function() {
+        document.getElementById("butN").addEventListener("click", function() {
+            var userName = $("#user").val();
+            var pass = $("#password").val();
+            gotologin(userName, pass);
+        });
+
+
+        document.addEventListener("keyup", function(event) {
+            if (event.key === "Enter") {
+                var userName = $("#user").val();
+                var pass = $("#password").val();
+                gotologin(userName, pass);
+            }
+        });
+
+        function gotologin(userName, pass) {
+            var datatosend = {
+                "UserName": userName,
+                "password": pass
+            };
+
+            $.ajax({
+                type: 'GET',
+                url: '/Home/verify',
+                dataType: 'html',
+                data: datatosend,
+                success: function(response) {
+                       $("#view").html(response);
+                }
+            });
+        }
+    });
+</script>
+
+
+

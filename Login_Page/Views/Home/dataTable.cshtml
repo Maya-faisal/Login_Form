@@ -1,0 +1,82 @@
+﻿@model List<Login_Page.Models.Student>
+@using Newtonsoft.Json;
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@{
+    ViewData["Title"] = "Table of students";
+}
+
+<html>
+<head>
+    <meta charset="UTF-8">
+</head>
+
+<body id="view">
+
+     <table class="table table-bordered mt-3">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Email</th>
+                <th>Gender</th>
+                <th>Age</th>
+                <th>Edit Info</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (ViewBag.Students != null)
+            {
+                foreach (var student in ViewBag.Students)
+                {
+                    <tr>
+                        <td>@student.ID</td>
+                        <td>@student.firstName</td>
+                        <td>@student.lastName</td>
+                        <td>@student.email</td>
+                        <td>@student.gender</td>
+                        <td>@student.age</td>
+                       <td> <button class="btn btn-outline-secondary editbtn" data-student='@Html.Raw(JsonConvert.SerializeObject(student))'>Edit</button></td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr>
+                    <td colspan="7">No students available.</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    </body>
+</html>
+
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+<script>
+
+      $(document).ready(function() {
+        $(".editbtn").on("click", function() {
+
+            var studentData = $(this).data("student");
+
+            console.log(studentData);
+
+            $.ajax({
+                type: 'POST',
+                url: '/Home/EditData',
+                dataType: 'html',
+                data: { student: studentData },
+                success: function(response) {
+                       $("#view").html(response);
+                }
+            });
+        });
+    });
+
+</script>

@@ -1,0 +1,23 @@
+﻿
+@using Microsoft.AspNetCore.Http;
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";    
+}
+
+
+<html>
+    <link rel="stylesheet" href="~/css/Homepage.css">
+<head>
+    <meta charset="UTF-8">
+    <title>Welcome Page</title>
+</head>
+
+<body>
+    <div>
+        <h1> Welcome</h1>
+        <h1>@TempData["test"] </h1>
+    </div>
+
+    </body>
+</html>

@@ -1,0 +1,130 @@
+﻿@{
+    ViewData["Title"] = "Edit Form";
+}
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";    
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body id="view">
+    <div class="container mt-5">
+        <h2 class="mb-4">Student Information Form</h2>
+
+        <form id="studentForm" class="needs-validation" novalidate>
+
+            <div class="form-group">
+                <label for="ID">ID</label>
+                <input type="number" class="form-control" id="id" value = "@ViewBag.Student.ID" required>
+                <div class="invalid-feedback">Please enter a valid ID </div>
+            </div>
+
+
+            <div class="form-row">
+
+                <div class="form-group col-md-6">
+                    <label for="firstName">First Name</label>
+                    <input type="text" class="form-control" id="firstName" value = "@ViewBag.Student.firstName" required>
+                    <div class="invalid-feedback">Please enter your first name.</div>
+                </div>
+
+                <div class="form-group col-md-6">
+                    <label for="lastName">Last Name</label>
+                    <input type="text" class="form-control" id="lastName" value = "@ViewBag.Student.lastName" required>
+                    <div class="invalid-feedback">Please enter your last name.</div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" class="form-control" id="email" value = "@ViewBag.Student.email" required>
+                <div class="invalid-feedback">Please enter a valid email address.</div>
+            </div>
+
+            <div class="form-group">
+                <label for="gender">Gender</label>
+                <select class="form-control" id="gender" required>
+                    <option value="@ViewBag.Student.gender" disabled selected>@ViewBag.Student.gender</option>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                </select>
+                <div class="invalid-feedback">Please select your gender.</div>
+            </div>
+
+            <div class="form-group">
+                <label for="age">Age</label>
+                <input type="number" class="form-control" id="age" value = "@ViewBag.Student.age" required>
+                <div class="invalid-feedback">Please enter a valid age.</div>
+            </div>
+
+        <button type="submit" class="btn btn-outline-secondary" id="submit">Submit</button>
+   
+        </form>
+    </div>
+
+    </body>
+</html>
+
+
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="~/js/popper.js"></script>
+    <script src="~/js/bootstrap.js"></script>
+
+<script>
+
+  (function() {
+  'use strict';
+
+  window.addEventListener('load', function() {
+    var forms = document.getElementsByClassName('needs-validation');
+
+    var validation = Array.prototype.filter.call(forms, function(form) {
+      form.addEventListener('submit', function(event) {
+        if (form.checkValidity() === false) {
+          event.preventDefault();
+          event.stopPropagation();
+        } else {
+          event.preventDefault();
+
+          var ID = document.getElementById('id').value;
+          var firstName = document.getElementById('firstName').value;
+          var lastName = document.getElementById('lastName').value;
+          var email = document.getElementById('email').value;
+          var gender = document.getElementById('gender').value;
+          var age = document.getElementById('age').value;
+
+          var student = {
+            ID: ID,
+            FirstName: firstName,
+            LastName: lastName,
+            Email: email,
+            Gender: gender,
+            Age: age
+          };
+
+          console.log(student);
+
+          $.ajax({
+            url: '/Home/storedata',
+            type: 'POST',
+            dataType: 'html',
+            data: student,
+            success: function(response) {
+              $("#view").html(response);
+            }
+          });
+        }
+
+        form.classList.add('was-validated');
+      }, false);
+    });
+
+  });
+})();
+
+</script>
