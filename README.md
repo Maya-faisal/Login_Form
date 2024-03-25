@@ -1,4 +1,4 @@
-# Simple Login Page with Student Management
+# Simple Login Form
 
 This project is a simple login page created using ASP.NET with C#, HTML, CSS, and Bootstrap. The login page allows users to enter their username and password to access a website. Unlike traditional login systems, this project does not rely on a database to store user credentials. Instead, it demonstrates a basic authentication mechanism using hardcoded credentials within the C# code.
 
